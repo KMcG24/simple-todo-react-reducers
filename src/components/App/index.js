@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import Header from "../Header";
 import "./App.css";
 
 const initialState = { todos: [], input: "" };
@@ -43,51 +44,57 @@ function App() {
   }
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const title = "Write your to dos here";
   return (
-    <div className="App">
-      <button
-        onClick={() =>
-          dispatch({
-            type: "ADD_TODO"
-          })
-        }
-      >
-        +
-      </button>
-      <input
-        onChange={e =>
-          dispatch({ type: "HANDLE_INPUT", input: e.target.value })
-        }
-        style={{ height: "10px", width: "100px" }}
-      />
+    <>
+      <div>
+        <Header title={title} />
+      </div>
 
-      {state.todos.map((item, indx) => (
-        <div>
-          {item.complete ? (
-            <strike>{item.todo}</strike>
-          ) : (
-            <div>{item.todo}</div>
-          )}
-          <button
-            onClick={() =>
-              dispatch({
-                type: "DELETE_TODO",
-                index: indx
-              })
-            }
-          >
-            -
-          </button>
+      <div className="App">
+        <button
+          onClick={() =>
+            dispatch({
+              type: "ADD_TODO"
+            })
+          }
+        >
+          +
+        </button>
+        <input
+          onChange={e =>
+            dispatch({ type: "HANDLE_INPUT", input: e.target.value })
+          }
+          style={{ height: "10px", width: "100px" }}
+        />
 
-          <button
-            onClick={() => dispatch({ type: "COMPLETE_TODO", index: indx })}
-          >
-            complete
-          </button>
-        </div>
-      ))}
-    </div>
+        {state.todos.map((item, indx) => (
+          <div>
+            {item.complete ? (
+              <strike>{item.todo}</strike>
+            ) : (
+              <div>{item.todo}</div>
+            )}
+            <button
+              onClick={() =>
+                dispatch({
+                  type: "DELETE_TODO",
+                  index: indx
+                })
+              }
+            >
+              -
+            </button>
+
+            <button
+              onClick={() => dispatch({ type: "COMPLETE_TODO", index: indx })}
+            >
+              complete
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
